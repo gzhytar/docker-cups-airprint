@@ -1,16 +1,15 @@
-FROM ubuntu:zesty
+FROM ubuntu:focal
 
 # Add repos
-RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ zesty multiverse' >> /etc/apt/sources.list.d/multiverse.list && \
-	echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ zesty multiverse' >> /etc/apt/sources.list.d/multiverse.list && \
-	echo 'deb http://us.archive.ubuntu.com/ubuntu/ zesty-updates multiverse' >> /etc/apt/sources.list.d/multiverse.list && \
-	echo 'deb-src http://us.archive.ubuntu.com/ubuntu/ zesty-updates multiverse' >> /etc/apt/sources.list.d/multiverse.list && \
-	echo 'deb http://archive.ubuntu.com/ubuntu/ zesty-security multiverse' >> /etc/apt/sources.list.d/multiverse.list && \
-	echo 'deb-src http://archive.ubuntu.com/ubuntu/ zesty-security multiverse' >> /etc/apt/sources.list.d/multiverse.list
+RUN echo 'deb http://archive.ubuntu.com/ubuntu/ focal multiverse' >> /etc/apt/sources.list.d/multiverse.list && \
+	echo 'deb-src http://archive.ubuntu.com/ubuntu/ focal multiverse' >> /etc/apt/sources.list.d/multiverse.list && \
+	echo 'deb http://archive.ubuntu.com/ubuntu/ focal-updates multiverse' >> /etc/apt/sources.list.d/multiverse.list && \
+	echo 'deb-src http://archive.ubuntu.com/ubuntu/ focal-updates multiverse' >> /etc/apt/sources.list.d/multiverse.list && \
+	echo 'deb http://archive.ubuntu.com/ubuntu/ focal-security multiverse' >> /etc/apt/sources.list.d/multiverse.list && \
+	echo 'deb-src http://archive.ubuntu.com/ubuntu/ focal-security multiverse' >> /etc/apt/sources.list.d/multiverse.list
 
 # Install the packages we need. Avahi will be included
 RUN apt-get update && apt-get install -y \
-	brother-lpr-drivers-extra brother-cups-wrapper-extra \
 	cups \
 	cups-pdf \
 	inotify-tools \
@@ -37,4 +36,3 @@ RUN sed -i 's/Listen localhost:631/Listen 0.0.0.0:631/' /etc/cups/cupsd.conf && 
 	sed -i 's/<Location \/admin\/conf>/<Location \/admin\/conf>\n  Allow All/' /etc/cups/cupsd.conf && \
 	echo "ServerAlias *" >> /etc/cups/cupsd.conf && \
 	echo "DefaultEncryption Never" >> /etc/cups/cupsd.conf
-
